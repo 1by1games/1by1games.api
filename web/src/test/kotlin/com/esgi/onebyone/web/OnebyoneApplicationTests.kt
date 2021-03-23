@@ -1,4 +1,4 @@
-package com.esgi.onebyone
+package com.esgi.onebyone.web
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
