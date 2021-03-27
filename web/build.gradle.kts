@@ -4,6 +4,9 @@ plugins {
     kotlin("plugin.spring")
 }
 
+val javaJwtVersion = extra.get("javaJwtVersion")
+val jaxbApiVersion = extra.get("jaxbApiVersion")
+
 repositories {
     mavenCentral()
 }
@@ -18,6 +21,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.auth0:java-jwt:$javaJwtVersion")
+    implementation("javax.xml.bind:jaxb-api:$jaxbApiVersion")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
@@ -27,4 +33,6 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 
     implementation(project(":infrastructure"))
+    implementation(project(":core.domain"))
+    implementation(project(":core.application"))
 }

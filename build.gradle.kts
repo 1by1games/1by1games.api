@@ -1,6 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val javaJwtVersion: String by project
+val jaxbApiVersion : String by project
 
+extra.apply {
+    set("javaJwtVersion", javaJwtVersion)
+    set("jaxbApiVersion", jaxbApiVersion)
+}
 
 repositories {
     mavenCentral()
