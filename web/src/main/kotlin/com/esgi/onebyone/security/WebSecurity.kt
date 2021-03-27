@@ -20,11 +20,19 @@ open class WebSecurity(
     private val authProvider: AuthTokenSecurityProvider
 ) : WebSecurityConfigurerAdapter() {
 
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().cors().and()
             .authorizeRequests()
             .antMatchers("/auth/**").permitAll()
+            .antMatchers(
+                    "/v2/api-docs",
+                    "/configuration/ui",
+                    "/swagger-resources/**",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**").permitAll()
             .anyRequest().authenticated()
         http.addFilterAfter(JWTAuthorizationFilter(super.authenticationManager()), JWTAuthenticationFilter::class.java)
     }

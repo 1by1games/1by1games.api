@@ -3,7 +3,7 @@ package com.esgi.onebyone.security
 
 import com.esgi.onebyone.application.AccountsService
 import com.esgi.onebyone.application.ApplicationException
-import com.esgi.onebyone.domain.Role
+import com.esgi.onebyone.domain.account.Role
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
