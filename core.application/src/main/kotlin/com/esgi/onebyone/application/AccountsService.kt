@@ -1,7 +1,10 @@
 package com.esgi.onebyone.application
 
+import com.esgi.onebyone.application.entities.ConnectedUser
+import com.esgi.onebyone.application.entities.Credential
+import com.esgi.onebyone.application.entities.UserEdition
+import com.esgi.onebyone.application.entities.UserResume
 import com.esgi.onebyone.application.repositories.IAccountsRepository
-import com.esgi.onebyone.domain.*
 import com.esgi.onebyone.domain.account.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -37,7 +40,7 @@ class AccountsService @Autowired constructor(
             throw ApplicationException("non")
         }
 
-
+        return ConnectedUser(UUID.randomUUID(), "toto", Role.USER, "todo", "tada")
 
     }
 }

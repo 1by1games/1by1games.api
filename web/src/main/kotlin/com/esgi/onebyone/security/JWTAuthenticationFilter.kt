@@ -1,6 +1,6 @@
 package com.esgi.onebyone.security
 
-import com.esgi.onebyone.domain.Credential
+import com.esgi.onebyone.application.entities.Credential
 import com.esgi.onebyone.security.SecurityConstants.HEADER_STRING
 import com.esgi.onebyone.security.SecurityConstants.TOKEN_PREFIX
 import com.fasterxml.jackson.databind.ObjectMapper

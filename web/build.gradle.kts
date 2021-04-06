@@ -7,9 +7,6 @@ plugins {
 val javaJwtVersion = extra.get("javaJwtVersion")
 val jaxbApiVersion = extra.get("jaxbApiVersion")
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
@@ -35,4 +32,8 @@ dependencies {
     implementation(project(":infrastructure"))
     implementation(project(":core.domain"))
     implementation(project(":core.application"))
+
+
+    // broker de messages
+    implementation ("io.jkratz.springmediatr:spring-mediatr:1.1-RELEASE")
 }

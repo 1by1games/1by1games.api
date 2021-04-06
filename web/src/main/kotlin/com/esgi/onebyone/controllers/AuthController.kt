@@ -2,16 +2,21 @@ package com.esgi.onebyone.controllers
 
 import com.esgi.onebyone.application.AccountsService
 import com.esgi.onebyone.application.ApplicationException
-import com.esgi.onebyone.domain.ConnectedUser
-import com.esgi.onebyone.domain.UserEdition
-import com.esgi.onebyone.domain.UserLogin
+import com.esgi.onebyone.application.entities.ConnectedUser
+import com.esgi.onebyone.application.entities.UserEdition
+import com.esgi.onebyone.application.login_user.UserLoginCommand
+import io.jkratz.mediator.core.Command
+import io.jkratz.mediator.core.Mediator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+data class TestClass(val con : String): Command
+
+
 @RestController
 @RequestMapping("auth")
-open class AuthController constructor(private val accountsService: AccountsService) {
+open class AuthController constructor(private val accountsService: AccountsService, private val mediator: Mediator) {
 
 
     @PostMapping("register")
@@ -25,9 +30,9 @@ open class AuthController constructor(private val accountsService: AccountsServi
 
 
     @PostMapping("login")
-    fun login(@RequestBody credentials: UserLogin): ResponseEntity<ConnectedUser> {
+    fun login(@RequestBody credentials: UserLoginCommand): ResponseEntity<ConnectedUser> {
         return try {
-            ResponseEntity.ok(accountsService.login(credentials))
+            ResponseEntity.ok(mediator.dispatch(credentials))
         } catch (e: ApplicationException) {
             ResponseEntity.notFound().build()
         }
