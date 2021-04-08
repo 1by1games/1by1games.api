@@ -1,8 +1,9 @@
 package com.esgi.onebyone.security
 
+import com.esgi.onebyone.application.parse_token.ParseTokenQuery
 import com.esgi.onebyone.security.SecurityConstants.HEADER_STRING
 import com.esgi.onebyone.security.SecurityConstants.TOKEN_PREFIX
-import com.esgi.onebyone.commons.JWTAuthentication
+import io.jkratz.mediator.core.Mediator
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JWTAuthorizationFilter(private val authManager: AuthenticationManager) : GenericFilterBean() {
+class JWTAuthorizationFilter(private val authManager: AuthenticationManager, private val mediator : Mediator) : GenericFilterBean() {
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val req = request as? HttpServletRequest
         val res = response as? HttpServletResponse
@@ -41,7 +42,7 @@ class JWTAuthorizationFilter(private val authManager: AuthenticationManager) : G
         if (token != null) {
             // parse the token.
             try {
-                val user = JWTAuthentication.parse(token)
+                val user = mediator.dispatch(ParseTokenQuery(token))
                 return UsernamePasswordAuthenticationToken(user, null, ArrayList())
             } catch (e: Exception) {
                 return null

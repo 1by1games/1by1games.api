@@ -36,9 +36,6 @@ class AccountsService @Autowired constructor(
     fun register(user: UserEdition): ConnectedUser {
         val existingAccounts = repository.findAll()
 
-        if (domainService.isUnique(Email(user.email) , Username(user.username), existingAccounts)) {
-            throw ApplicationException("non")
-        }
 
         return ConnectedUser(UUID.randomUUID(), "toto", Role.USER, "todo", "tada")
 

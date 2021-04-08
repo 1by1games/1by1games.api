@@ -1,5 +1,6 @@
 package com.esgi.onebyone.infrastructure
 
+import com.esgi.onebyone.domain.account.Role
 import org.hibernate.annotations.Type
 import java.util.*
 import javax.persistence.*
@@ -15,7 +16,11 @@ class Account(
 
     @Column(name = "email") var email: String,
 
-    @Column(name = "password") var password: String
+    @Column(name = "password") var password: String,
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role") var role: Role
+
 ) {
 
 

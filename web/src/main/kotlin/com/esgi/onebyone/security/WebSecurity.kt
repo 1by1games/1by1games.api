@@ -1,5 +1,7 @@
 package com.esgi.onebyone.security
 
+import io.jkratz.mediator.core.Mediator
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
@@ -17,7 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 open class WebSecurity(
-    private val authProvider: AuthTokenSecurityProvider
+    private val authProvider: AuthTokenSecurityProvider,
+    @Autowired private val mediator : Mediator
 ) : WebSecurityConfigurerAdapter() {
 
 
@@ -25,7 +28,8 @@ open class WebSecurity(
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().cors().and()
             .authorizeRequests()
-            .antMatchers("/auth/**").permitAll()
+            .antMatchers("/accounts/registration").permitAll()
+            .antMatchers("/accounts/authentication").permitAll()
             .antMatchers(
                     "/v2/api-docs",
                     "/configuration/ui",
@@ -34,7 +38,9 @@ open class WebSecurity(
                     "/swagger-ui.html",
                     "/webjars/**").permitAll()
             .anyRequest().authenticated()
-        http.addFilterAfter(JWTAuthorizationFilter(super.authenticationManager()), JWTAuthenticationFilter::class.java)
+        http.addFilter(JWTAuthenticationFilter(super.authenticationManager(), mediator))
+                .addFilterAfter(JWTAuthorizationFilter(super.authenticationManager(), mediator), JWTAuthenticationFilter::class.java)
+
     }
 
     @Throws(Exception::class)
@@ -45,7 +51,7 @@ open class WebSecurity(
 
 
     @Bean
-    open fun corsConfigurationSource(): CorsConfigurationSource {
+    fun corsConfigurationSource(): CorsConfigurationSource {
 //        val source = UrlBasedCorsConfigurationSource()
 //        source.registerCorsConfiguration("/**", )
 //        source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())

@@ -19,4 +19,12 @@ class AccountRepositoryAdapter @Autowired constructor(private val repository: Ac
         repository.saveAndFlush(account.to())
         return AccountID(UUID.randomUUID())
     }
+
+    override fun getNewId(): AccountID {
+        return AccountID(UUID.randomUUID())
+    }
+
+    override fun findByCredentials(username: String, password: String): Account? {
+        return repository.findAccountByUsernameAndPassword(username, password)?.to()
+    }
 }

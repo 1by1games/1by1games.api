@@ -7,4 +7,6 @@ import java.util.*
 
 @Repository
 interface AccountRepository : JpaRepository<Account, UUID> {
+
+    fun findAccountByUsernameAndPassword(username: String, password: String) : Account?
 }

@@ -8,5 +8,7 @@ interface IAccountsRepository {
     fun findAll(): List<Account>
 
     fun save(account: Account): AccountID
+    fun getNewId(): AccountID
+    fun findByCredentials(username: String, password: String): Account?
 
 }
