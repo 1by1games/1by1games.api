@@ -1,12 +1,10 @@
 package com.esgi.onebyone.security
 
-import com.esgi.onebyone.application.entities.Credential
 import com.esgi.onebyone.application.sign_token.SignTokenQuery
 import com.esgi.onebyone.security.SecurityConstants.HEADER_STRING
 import com.esgi.onebyone.security.SecurityConstants.TOKEN_PREFIX
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jkratz.mediator.core.Mediator
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication

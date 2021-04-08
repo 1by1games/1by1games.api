@@ -1,4 +1,4 @@
-package com.esgi.onebyone.application.entities
+package com.esgi.onebyone.security
 
 
 data class Credential(val username: String, val password: String)

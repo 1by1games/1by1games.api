@@ -1,7 +1,6 @@
 package com.esgi.onebyone.security
 
 
-import com.esgi.onebyone.application.AccountsService
 import com.esgi.onebyone.application.ApplicationException
 import com.esgi.onebyone.application.get_account_by_username.GetAccountByUsernameQuery
 import com.esgi.onebyone.domain.account.Role
