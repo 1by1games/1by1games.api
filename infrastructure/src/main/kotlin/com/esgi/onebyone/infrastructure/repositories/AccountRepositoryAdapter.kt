@@ -27,4 +27,10 @@ class AccountRepositoryAdapter @Autowired constructor(private val repository: Ac
     override fun findByCredentials(username: String, password: String): Account? {
         return repository.findAccountByUsernameAndPassword(username, password)?.to()
     }
+
+    override fun findByUsername(username: String): Account? {
+        return repository.findAccountByUsername(username)?.to()
+    }
+
+
 }

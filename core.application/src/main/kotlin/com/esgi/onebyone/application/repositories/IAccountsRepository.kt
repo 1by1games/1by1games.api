@@ -11,4 +11,6 @@ interface IAccountsRepository {
     fun getNewId(): AccountID
     fun findByCredentials(username: String, password: String): Account?
 
+    fun findByUsername(username: String): Account?
+
 }

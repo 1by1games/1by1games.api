@@ -38,8 +38,7 @@ open class WebSecurity(
                     "/swagger-ui.html",
                     "/webjars/**").permitAll()
             .anyRequest().authenticated()
-        http.addFilter(JWTAuthenticationFilter(super.authenticationManager(), mediator))
-                .addFilterAfter(JWTAuthorizationFilter(super.authenticationManager(), mediator), JWTAuthenticationFilter::class.java)
+        http.addFilterAfter(JWTAuthorizationFilter(super.authenticationManager(), mediator), JWTAuthenticationFilter::class.java)
 
     }
 
@@ -49,6 +48,10 @@ open class WebSecurity(
         auth.authenticationProvider(authProvider)
     }
 
+    @Bean
+    fun generateAuthenticationFilter() : JWTAuthenticationFilter {
+        return JWTAuthenticationFilter(super.authenticationManager(), mediator)
+    }
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {

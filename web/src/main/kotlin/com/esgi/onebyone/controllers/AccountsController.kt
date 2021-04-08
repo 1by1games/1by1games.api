@@ -13,9 +13,11 @@ import io.jkratz.mediator.core.Command
 import io.jkratz.mediator.core.Mediator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import java.util.*
+import javax.annotation.security.RolesAllowed
 
 
 @RestController
@@ -50,6 +52,8 @@ open class AccountsController constructor(private val accountsService: AccountsS
         }
     }
 
+
+    @Secured("ROLE_ADMIN")
     @GetMapping
     fun getAll(): ResponseEntity<List<Account>> {
         return try {

@@ -3,7 +3,9 @@ package com.esgi.onebyone.security
 
 import com.esgi.onebyone.application.AccountsService
 import com.esgi.onebyone.application.ApplicationException
+import com.esgi.onebyone.application.get_account_by_username.GetAccountByUsernameQuery
 import com.esgi.onebyone.domain.account.Role
+import io.jkratz.mediator.core.Mediator
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class AuthTokenSecurityProvider(private val accountsService: AccountsService) : AuthenticationProvider {
+class AuthTokenSecurityProvider(private val mediator: Mediator) : AuthenticationProvider {
     @Throws(AuthenticationException::class)
     override fun authenticate(auth: Authentication?): Authentication? {
         if (auth == null) {
@@ -26,8 +28,8 @@ class AuthTokenSecurityProvider(private val accountsService: AccountsService) : 
         }
         val grantedAuths: MutableList<GrantedAuthority> = ArrayList()
         try {
-            val userResume = accountsService.getResumeByUsername(name)
-            userResume?.let {
+            val userResume = mediator.dispatch(GetAccountByUsernameQuery(name))
+            userResume.let {
                 grantedAuths.clear()
                 when (userResume.role) {
                     Role.USER -> grantedAuths.add(SimpleGrantedAuthority("ROLE_USER"))
