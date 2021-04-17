@@ -1,6 +1,6 @@
 package com.esgi.onebyone.security
 
-import com.esgi.onebyone.application.parse_token.ParseTokenQuery
+import com.esgi.onebyone.application.security.parse_token.ParseTokenQuery
 import com.esgi.onebyone.security.SecurityConstants.HEADER_STRING
 import com.esgi.onebyone.security.SecurityConstants.TOKEN_PREFIX
 import io.jkratz.mediator.core.Mediator

@@ -1,6 +1,6 @@
 package com.esgi.onebyone.security
 
-import com.esgi.onebyone.application.sign_token.SignTokenQuery
+import com.esgi.onebyone.application.security.sign_token.SignTokenQuery
 import com.esgi.onebyone.security.SecurityConstants.HEADER_STRING
 import com.esgi.onebyone.security.SecurityConstants.TOKEN_PREFIX
 import com.fasterxml.jackson.databind.ObjectMapper

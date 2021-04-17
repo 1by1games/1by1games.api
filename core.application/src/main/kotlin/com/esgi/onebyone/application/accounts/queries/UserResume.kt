@@ -1,4 +1,4 @@
-package com.esgi.onebyone.application.get_account_by_username
+package com.esgi.onebyone.application.accounts.queries
 
 import com.esgi.onebyone.domain.account.Role
 import java.util.*

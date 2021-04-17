@@ -1,10 +1,11 @@
 package com.esgi.onebyone.infrastructure.repositories
 
-import com.esgi.onebyone.application.repositories.IAccountsRepository
+import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
 import com.esgi.onebyone.domain.account.Account
 import com.esgi.onebyone.domain.account.AccountID
 import com.esgi.onebyone.infrastructure.mappers.to
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -30,6 +31,10 @@ class AccountRepositoryAdapter @Autowired constructor(private val repository: Ac
 
     override fun findByUsername(username: String): Account? {
         return repository.findAccountByUsername(username)?.to()
+    }
+
+    override fun findById(id: AccountID): Account? {
+        return repository.findByIdOrNull(id.id)?.to()
     }
 
 

@@ -1,4 +1,4 @@
-package com.esgi.onebyone.application.sign_token
+package com.esgi.onebyone.application.security.sign_token
 
 import com.esgi.onebyone.application.contracts.services.ITokenService
 import io.jkratz.mediator.core.Request

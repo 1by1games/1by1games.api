@@ -1,4 +1,4 @@
-package com.esgi.onebyone.infrastructure
+package com.esgi.onebyone.infrastructure.models
 
 import com.esgi.onebyone.domain.account.Role
 import org.hibernate.annotations.Type
@@ -7,7 +7,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "account")
-class Account(
+class AccountModel(
     @Id
     @Type(type = "uuid-char")
     @Column(name = "id") var id: UUID,

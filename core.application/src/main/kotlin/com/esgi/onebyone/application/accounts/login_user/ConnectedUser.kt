@@ -1,4 +1,4 @@
-package com.esgi.onebyone.application.login_user
+package com.esgi.onebyone.application.accounts.login_user
 
 import com.esgi.onebyone.domain.account.Role
 import java.util.*

@@ -1,12 +1,12 @@
 package com.esgi.onebyone.controllers
 
 import com.esgi.onebyone.application.ApplicationException
-import com.esgi.onebyone.application.get_account_by_username.UserResume
-import com.esgi.onebyone.application.login_user.ConnectedUser
-import com.esgi.onebyone.application.get_all_accounts.GetAllAccountsQuery
-import com.esgi.onebyone.application.login_user.UserLoginCommand
-import com.esgi.onebyone.application.register_user.UserRegisterCommand
-import com.esgi.onebyone.domain.account.Account
+import com.esgi.onebyone.application.accounts.queries.UserResume
+import com.esgi.onebyone.application.accounts.login_user.ConnectedUser
+import com.esgi.onebyone.application.accounts.queries.get_all_accounts.GetAllAccountsQuery
+import com.esgi.onebyone.application.accounts.login_user.UserLoginCommand
+import com.esgi.onebyone.application.accounts.queries.get_account_by_id.GetAccountByIdQuery
+import com.esgi.onebyone.application.accounts.register_user.UserRegisterCommand
 import io.jkratz.mediator.core.Mediator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -34,8 +34,12 @@ open class AccountsController constructor( private val mediator: Mediator) {
 
 
     @GetMapping("{id}")
-    fun getById(@PathVariable id: UUID) : ResponseEntity<*> {
-        return ResponseEntity.ok(null)
+    fun getById(@PathVariable id: UUID) : ResponseEntity<UserResume> {
+        return try {
+            ResponseEntity.ok(mediator.dispatch(GetAccountByIdQuery(id)))
+        } catch (e: ApplicationException) {
+            ResponseEntity.notFound().build()
+        }
     }
 
 

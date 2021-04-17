@@ -1,8 +1,8 @@
-package com.esgi.onebyone.application.register_user
+package com.esgi.onebyone.application.accounts.register_user
 
 import com.esgi.onebyone.application.ApplicationException
 import com.esgi.onebyone.application.contracts.services.IHashingService
-import com.esgi.onebyone.application.repositories.IAccountsRepository
+import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
 import com.esgi.onebyone.domain.account.*
 import io.jkratz.mediator.core.Request
 import io.jkratz.mediator.core.RequestHandler

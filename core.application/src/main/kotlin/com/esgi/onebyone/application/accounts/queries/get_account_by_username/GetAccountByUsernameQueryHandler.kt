@@ -1,7 +1,8 @@
-package com.esgi.onebyone.application.get_account_by_username
+package com.esgi.onebyone.application.accounts.queries.get_account_by_username
 
 import com.esgi.onebyone.application.ApplicationException
-import com.esgi.onebyone.application.repositories.IAccountsRepository
+import com.esgi.onebyone.application.accounts.queries.UserResume
+import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
 import io.jkratz.mediator.core.Request
 import io.jkratz.mediator.core.RequestHandler
 import org.springframework.beans.factory.annotation.Autowired
