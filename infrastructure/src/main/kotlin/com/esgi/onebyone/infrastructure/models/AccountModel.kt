@@ -19,7 +19,12 @@ class AccountModel(
     @Column(name = "password") var password: String,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role") var role: Role
+    @Column(name = "role") var role: Role,
+
+    @OneToMany(mappedBy = "account", cascade = [CascadeType.ALL])
+    var members: Collection<MemberModel>
+
+
 
 ) {
 

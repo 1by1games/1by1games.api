@@ -25,7 +25,14 @@ class RoomModel (
     @Column(name = "size") var roomSize: Int,
 
     @Column(name = "creation_date") var creationDate : LocalDateTime,
-    @Column(name = "end_date") var endDate : LocalDateTime
+    @Column(name = "end_date") var endDate : LocalDateTime,
+
+
+    @OneToMany(mappedBy = "room", cascade = [CascadeType.ALL])
+    var members: Collection<MemberModel>
+
+
+
 ) {
 
 }
