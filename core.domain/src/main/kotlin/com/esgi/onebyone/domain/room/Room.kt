@@ -7,7 +7,7 @@ import java.time.ZoneOffset
 
 class Room (
         val id : RoomId,
-        val name: String,
+        val name : String,
         val password: String,
         private val _members: MutableList<Member>,
         var state: Room.State,
@@ -31,7 +31,7 @@ class Room (
     companion object {
         fun create( id : RoomId,
                     name : String,
-                    password: String,
+                    password : String,
                     author: Member,
                     roomSize: Int,
                     currentDice: Dice) : Room {

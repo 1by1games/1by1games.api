@@ -13,6 +13,9 @@ class MemberModel (
         @Column(name = "id")
         var id: UUID,
 
+        @Column(name = "is_author")
+        var isAuthor : Boolean,
+
         @ManyToOne
         @Type(type = "uuid-char")
         @JoinColumn(name = "account_id")
@@ -29,4 +32,4 @@ class MemberModel (
         @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
         var diceThrows: Collection<DiceThrowModel>
 
-        )
+)

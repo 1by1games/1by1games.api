@@ -34,7 +34,7 @@ class AccountRepositoryAdapter @Autowired constructor(private val repository: Ac
     }
 
     override fun findById(id: AccountID): Account? {
-        return repository.findByIdOrNull(id.id)?.to()
+        return repository.findByIdOrNull(id.value)?.to()
     }
 
 

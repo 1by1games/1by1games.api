@@ -21,7 +21,7 @@ class RoomTest {
         roomDefaultDice= Dice(6, 2)
         defaultRoom = Room.create(
                 id = RoomId(UUID.randomUUID()),
-                name = "souffreteux",
+                name = "myroom",
                 password = "password",
                 author = roomAuthor,
                 roomSize = 5,
@@ -81,7 +81,6 @@ class RoomTest {
     }
 
     //endregion
-
 
 
 }

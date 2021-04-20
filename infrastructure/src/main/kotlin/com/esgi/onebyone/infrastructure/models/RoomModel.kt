@@ -16,7 +16,6 @@ class RoomModel (
     @Column(name = "id") var id: UUID,
 
     @Column(name = "name") var name: String,
-
     @Column(name = "password") var password: String,
 
     @Enumerated(EnumType.STRING)
@@ -25,11 +24,15 @@ class RoomModel (
     @Column(name = "size") var roomSize: Int,
 
     @Column(name = "creation_date") var creationDate : LocalDateTime,
-    @Column(name = "end_date") var endDate : LocalDateTime,
+
+    @Column(name = "end_date") var endDate : LocalDateTime?,
+
+    @Column(name = "currentDiceSize") var currentDiceSize : Int,
+    @Column(name = "currentDiceAmount") var currentDiceAmount : Int,
 
 
     @OneToMany(mappedBy = "room", cascade = [CascadeType.ALL])
-    var members: Collection<MemberModel>
+    var members: Collection<MemberModel>?
 
 
 

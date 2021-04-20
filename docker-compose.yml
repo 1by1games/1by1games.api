@@ -4,7 +4,7 @@ services:
   onebyone-postgres:
     container_name: "onebyone-postgres"
     image: postgres
-    restart: always
+    restart: unless-stopped
     env_file:
       - ./application.env
     ports:

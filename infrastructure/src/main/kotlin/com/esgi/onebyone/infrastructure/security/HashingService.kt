@@ -3,6 +3,7 @@ package com.esgi.onebyone.infrastructure.security
 import com.esgi.onebyone.application.contracts.services.IHashingService
 import org.springframework.stereotype.Service
 import java.security.MessageDigest
+import java.security.Timestamp
 import javax.xml.bind.DatatypeConverter
 
 @Service
@@ -14,6 +15,10 @@ class HashingService : IHashingService {
 
     override fun matches(password: String, hashedPassword: String): Boolean {
         return hashedPassword == hashPassword(password)
+    }
+
+    override fun getNewAccessKey(): String {
+        return  "a"
     }
 
     private fun sha1(input: String) = hashString("SHA-1", input)

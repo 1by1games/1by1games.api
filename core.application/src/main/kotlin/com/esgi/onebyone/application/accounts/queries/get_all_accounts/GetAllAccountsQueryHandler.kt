@@ -13,7 +13,7 @@ class GetAllAccountsQuery: Request<List<UserResume>>
 class GetAllAccountsQueryHandler @Autowired constructor(private val repository: IAccountsRepository) : RequestHandler<GetAllAccountsQuery, List<UserResume>> {
     override fun handle(request: GetAllAccountsQuery): List<UserResume> {
         return repository.findAll().map {
-            UserResume(it.id.id, it.email, it.role, it.username)
+            UserResume(it.id.value, it.email, it.role, it.username)
         }
     }
 }

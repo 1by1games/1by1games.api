@@ -23,7 +23,7 @@ class LoginUserCommandHandler @Autowired constructor(
 
         user?.let {
             return ConnectedUser(
-                    id = user.id.id,
+                    id = user.id.value,
                     email = user.email,
                     role = user.role,
                     username = user.username,

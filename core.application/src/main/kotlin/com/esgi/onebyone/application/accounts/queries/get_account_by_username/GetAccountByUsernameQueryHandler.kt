@@ -16,7 +16,7 @@ class GetAccountByUsernameQueryHandler @Autowired constructor(private val reposi
     override fun handle(request: GetAccountByUsernameQuery): UserResume {
         repository.findByUsername(request.username)?.let {
             return UserResume(
-                it.id.id,
+                it.id.value,
                 it.email,
                 it.role,
                 it.username)

@@ -25,7 +25,7 @@ open class AccountsController constructor( private val mediator: Mediator) {
     open fun register(@RequestBody user: UserRegisterCommand): ResponseEntity<ConnectedUser> {
         return try{
             val created = mediator.dispatch(user)
-            val uri = MvcUriComponentsBuilder.fromMethodName(AccountsController::class.java, "getById", created.id.toString()).build().toUri()
+            val uri = MvcUriComponentsBuilder.fromMethodName(AccountsController::class.java, "getById", created.value.toString()).build().toUri()
             return ResponseEntity.created(uri).build()
         }catch (e: ApplicationException){
             ResponseEntity.status(HttpStatus.CONFLICT).build()
