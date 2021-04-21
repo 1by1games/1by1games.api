@@ -1,0 +1,27 @@
+version: "3.1"
+
+services:
+  onebyone-api:
+    container_name: onebyone-api
+    restart: unless-stopped
+    working_dir: /app
+    build:
+      dockerfile: Dockerfile
+      context: ../api
+    env_file:
+      - ./application.env
+    ports:
+      - 8081:8080
+
+  onebyone-postgres:
+    container_name: onebyone-postgres
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - ./application.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+
