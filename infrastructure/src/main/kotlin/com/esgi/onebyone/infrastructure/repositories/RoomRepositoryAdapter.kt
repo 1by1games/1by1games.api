@@ -14,9 +14,10 @@ import java.util.*
 
 @Service
 class RoomRepositoryAdapter @Autowired constructor(
-        private val roomRepository: RoomRepository,
-        private val memberRepository: MemberRepository,
-        private val accountRepository: AccountRepository) : IRoomRepository {
+    private val roomRepository: RoomRepository,
+    private val memberRepository: MemberRepository,
+    private val accountRepository: AccountRepository
+) : IRoomRepository {
     override fun getNewId(): RoomId {
         return RoomId(UUID.randomUUID())
     }
@@ -26,20 +27,21 @@ class RoomRepositoryAdapter @Autowired constructor(
         var roomSaved = roomRepository.findByIdOrNull(room.id.value)
 
         if (roomSaved == null) {
-            roomSaved = roomRepository.save( room.to() )
+            roomSaved = roomRepository.save(room.to())
         }
 
         room.members.forEach { memberEntity ->
 
-            val memberSaved = memberRepository.findByAccount_IdAndRoom_Id(memberEntity.id.value, roomSaved.id).firstOrNull()
+            val memberSaved =
+                memberRepository.findByAccount_IdAndRoom_Id(memberEntity.id.value, roomSaved.id).firstOrNull()
             if (memberSaved != null) {
 
                 val savedThrows = memberSaved.diceThrows
 
 
-                val diceThrowsToSave = memberEntity.diceThrows.filter{
-                    newDiceThrow -> savedThrows.none{
-                        savedThrow -> savedThrow.throwDate == newDiceThrow.throwDate
+                val diceThrowsToSave = memberEntity.diceThrows.filter { newDiceThrow ->
+                    savedThrows.none { savedThrow ->
+                        savedThrow.throwDate == newDiceThrow.throwDate
                     }
                 }
 
@@ -49,17 +51,24 @@ class RoomRepositoryAdapter @Autowired constructor(
                 memberRepository.save(memberSaved)
             } else {
                 accountRepository.findByIdOrNull(memberEntity.id.value)?.let { accountModel ->
-                    val newMemberModel = MemberModel(memberEntity.id.value, memberEntity.isAuthor, accountModel, roomSaved, listOf() )
+                    val newMemberModel =
+                        MemberModel(UUID.randomUUID(), memberEntity.isAuthor, null, roomSaved, listOf())
                     newMemberModel.diceThrows = memberEntity.diceThrows.map { dice -> dice.to(newMemberModel) }
 
+                    accountModel.members += newMemberModel
+
                     memberRepository.save(newMemberModel)
+//                    accountRepository.save(accountModel)
+
                 }
 
             }
         }
 
+        return RoomId(roomSaved.id)
+    }
 
-        //roomRepository.saveAndFlush(room.to())
-        return RoomId(UUID.randomUUID())
+    override fun doesRoomExistByNameAndState(name: String, state: Room.State): Boolean {
+        return roomRepository.getByNameAndState(name, state).firstOrNull() != null
     }
 }

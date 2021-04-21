@@ -20,7 +20,7 @@ class MemberModel (
         @Type(type = "uuid-char")
         @JoinColumn(name = "account_id")
         @MapsId("accountId")
-        var account: AccountModel,
+        var account: AccountModel?,
 
         @ManyToOne
         @Type(type = "uuid-char")

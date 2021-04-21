@@ -13,6 +13,7 @@ import com.esgi.onebyone.domain.room.RoomId
 import io.jkratz.mediator.core.Request
 import io.jkratz.mediator.core.RequestHandler
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.util.*
 
@@ -25,13 +26,17 @@ data class CreateRoomCommand(
         var currentDiceAmount : Int
         ) : Request<RoomId>
 
-class CreateRoomCommandHandler
-@Autowired constructor(private val repository: IRoomRepository,
+@Component
+class CreateRoomCommandHandler constructor(private val repository: IRoomRepository,
                        private val accountRepository: IAccountsRepository,
                        private val hashingService: IHashingService)
     : RequestHandler<CreateRoomCommand, RoomId> {
 
     override fun handle(request: CreateRoomCommand): RoomId {
+        if(repository.doesRoomExistByNameAndState(request.name, Room.State.OPEN)) {
+            throw ApplicationException("An open room with this name: ${request.name} already exist")
+        }
+
         var dice = Dice(request.currentDiceSize, request.currentDiceAmount)
 
         val authorAccount = accountRepository.findById(AccountID(request.authorId))
@@ -45,12 +50,13 @@ class CreateRoomCommandHandler
         )
 
         val newRoom = Room.create(
-                repository.getNewId(),
-                request.name,
-                request.password,
-                author,
-                request.size,
-                dice)
+            id = repository.getNewId(),
+            name = request.name,
+            password = hashingService.hashPassword(request.password),
+            author = author,
+            roomSize = request.size,
+            currentDice = dice
+        )
 
         return repository.save(newRoom)
 
