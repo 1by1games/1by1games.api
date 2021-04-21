@@ -22,7 +22,7 @@ open class AccountsController constructor( private val mediator: Mediator) {
 
 
     @PostMapping("registration")
-    open fun register(@RequestBody user: UserRegisterCommand): ResponseEntity<ConnectedUser> {
+    open fun register(@RequestBody user: UserRegisterCommand): ResponseEntity<Unit> {
         return try{
             val created = mediator.dispatch(user)
             val uri = MvcUriComponentsBuilder.fromMethodName(AccountsController::class.java, "getById", created.value.toString()).build().toUri()
