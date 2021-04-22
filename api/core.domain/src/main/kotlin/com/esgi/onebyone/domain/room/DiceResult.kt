@@ -6,5 +6,4 @@ class DiceResult (
         val dice : Dice,
         val result : Int,
         val throwDate : LocalDateTime) {
-
 }

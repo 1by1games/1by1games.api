@@ -4,14 +4,17 @@ services:
   onebyone-api:
     container_name: onebyone-api
     restart: unless-stopped
+    image: onebyone/api
     working_dir: /app
     build:
       dockerfile: Dockerfile
       context: ../api
     env_file:
       - ./application.env
+    volumes:
+      - ../api:/home/gradle/src
     ports:
-      - 8081:8080
+      - 8082:8080
 
   onebyone-postgres:
     container_name: onebyone-postgres

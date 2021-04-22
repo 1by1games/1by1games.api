@@ -21,7 +21,7 @@ class RegisterUserCommandHandler @Autowired constructor(private val repository: 
                     repository.getNewId(),
                     request.username,
                     request.email,
-                    hashingService.hashPassword(request.password),
+                    hashingService.hashPassword(request.password)
             )
             newAccount.setRole(existingAccounts)
 
