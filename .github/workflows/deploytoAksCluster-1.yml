@@ -16,8 +16,8 @@ jobs:
       - name: Run gradlew test
         uses: eskatos/gradle-command-action@v1
         with:
-          build-root-directory: "$GITHUB_WORKSPACE/api"
-          wrapper-directory: "$GITHUB_WORKSPACE/api"
+          build-root-directory: $GITHUB_WORKSPACE/api
+          wrapper-directory: $GITHUB_WORKSPACE/api
           arguments: test --stacktrace --scan
           wrapper-cache-enabled: true
           configuration-cache-enabled: true
