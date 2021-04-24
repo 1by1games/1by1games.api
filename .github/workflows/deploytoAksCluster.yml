@@ -1,5 +1,25 @@
 on: [push]
 jobs:
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Run gradlew test
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: test --stacktrace --scan
+          wrapper-cache-enabled: true
+          configuration-cache-enabled: true
+          
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
