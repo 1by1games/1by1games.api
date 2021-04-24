@@ -36,6 +36,7 @@ open class AccountsController constructor( private val mediator: Mediator) {
     @GetMapping("{id}")
     fun getById(@PathVariable id: UUID) : ResponseEntity<UserResume> {
         return try {
+            println(id)
             ResponseEntity.ok(mediator.dispatch(GetAccountByIdQuery(id)))
         } catch (e: ApplicationException) {
             ResponseEntity.notFound().build()
