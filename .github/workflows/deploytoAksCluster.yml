@@ -1,6 +1,6 @@
 on: [push]
 jobs:
-
+  
   test:
     strategy:
       matrix:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Run gradlew test
+      - name: Run ./api/gradlew test
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: test --stacktrace --scan
