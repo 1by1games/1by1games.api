@@ -1,0 +1,50 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: onebyonedr.azurecr.io
+        username: ${{ secrets.acr_onebyonedr_username }}
+        password: ${{ secrets.acr_onebyonedr_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/api" -f  "api/Dockerfile" -t onebyonedr.azurecr.io/onebyoneaks:${{ github.sha }} --label dockerfile-path=api/Dockerfile
+        docker push onebyonedr.azurecr.io/onebyoneaks:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_onebyoneaks_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep onebyone-aksb379 | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace onebyone-aksb379`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: onebyone-aksb379
+        container-registry-url: onebyonedr.azurecr.io
+        container-registry-username: ${{ secrets.acr_onebyonedr_username }}
+        container-registry-password: ${{ secrets.acr_onebyonedr_password }}
+        secret-name: onebyoneaksdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: onebyone-aksb379
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          onebyonedr.azurecr.io/onebyoneaks:${{ github.sha }}
+        imagepullsecrets: |
+          onebyoneaksdockerauth
