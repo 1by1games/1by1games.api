@@ -16,7 +16,7 @@ jobs:
       - name: Run gradlew test
         uses: eskatos/gradle-command-action@v1
         with:
-          arguments: test --stacktrace --scan
+          arguments: test --stacktrace --scan "./api"
           wrapper-cache-enabled: true
           configuration-cache-enabled: true
           
