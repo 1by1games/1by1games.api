@@ -13,9 +13,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Run ./api/gradlew test
+      - name: Run gradlew test
         uses: eskatos/gradle-command-action@v1
         with:
+          build-root-directory: ./api
           arguments: test --stacktrace --scan
           wrapper-cache-enabled: true
           configuration-cache-enabled: true
