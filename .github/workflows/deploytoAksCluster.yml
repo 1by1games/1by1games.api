@@ -13,7 +13,7 @@ jobs:
           java-version: 11
       - name: Grant execute permission for gradlew
         run: chmod +x ./api/gradlew
-      - name: Build with Gradle
+      - name: Test with gradle
         run: ./api/gradlew test -p api --no-daemon
 
   build-and-deploy:

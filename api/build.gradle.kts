@@ -79,20 +79,6 @@ allprojects {
 
 }
 
-
-//configurations {
-//    compileOnly {
-//        extendsFrom(configurations.annotationProcessor.get())
-//    }
-//}
-//tasks{
-//    bootJar{
-//        manifest{
-//            attributes["Start-Class"]="com.esgi.onebyone.OnebyoneApplication"
-//        }
-//    }
-//}
-
 subprojects {
     repositories {
         mavenCentral()
