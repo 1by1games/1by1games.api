@@ -12,11 +12,13 @@ jobs:
         with:
           java-version: 11
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x ./api/gradlew
       - name: Build with Gradle
         run: ./api/gradlew build
 
   build-and-deploy:
+    needs:
+      - test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
