@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "onebyoneaks-cc2d"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "onebyoneaks-cc2d"
+  template:
+    metadata:
+      labels:
+        app: "onebyoneaks-cc2d"
+    spec:
+      containers:
+        - name: "onebyoneaks-cc2d"
+          image: "onebyonedr.azurecr.io/onebyoneaks"
+          ports:
+          - containerPort: 8080
