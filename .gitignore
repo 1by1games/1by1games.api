@@ -1,2 +1,3 @@
 docker/postgres
 docker/application.env
+docker/deployment.yaml
