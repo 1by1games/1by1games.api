@@ -14,7 +14,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./api/gradlew
       - name: Build with Gradle
-        run: ./api/gradlew build
+        run: ./api/gradlew test
 
   build-and-deploy:
     needs:
