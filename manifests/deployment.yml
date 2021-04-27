@@ -19,7 +19,7 @@ spec:
           - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://onebyone-db.postgres.database.azure.com:5432/onebyone?sslmode=require
+              value: jdbc:postgresql://onebyone-db.postgres.database.azure.com:5432/onebyone
             - name: SPRING_DATASOURCE_USERNAME
               value: sbailleul@onebyone
             - name: SPRING_DATASOURCE_PASSWORD
