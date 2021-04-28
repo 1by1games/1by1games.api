@@ -21,7 +21,7 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://onebyone-db.postgres.database.azure.com:5432/onebyone
             - name: SPRING_DATASOURCE_USERNAME
-              value: sbailleul@onebyone
+              value: sbailleul@onebyone-db
             - name: SPRING_DATASOURCE_PASSWORD
               value: votu5632?,
 
