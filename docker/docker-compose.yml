@@ -11,10 +11,22 @@ services:
       context: ../api
     env_file:
       - ./application.env
-    volumes:
-      - ../api:/home/gradle/src
     ports:
       - 8082:8080
+  onebyone-api-cloud-test:
+    container_name: onebyone-api-cloud-test
+    restart: unless-stopped
+    image: onebyone/api
+    working_dir: /app
+    build:
+      dockerfile: Dockerfile
+      context: ../api
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://onebyone-db.postgres.database.azure.com:5432/onebyone"
+      SPRING_DATASOURCE_USERNAME: "sbailleul@onebyone-db"
+      SPRING_DATASOURCE_PASSWORD: "votu5632?,"
+    ports:
+      - 8083:8080
 
   onebyone-postgres:
     container_name: onebyone-postgres

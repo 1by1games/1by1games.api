@@ -2,6 +2,8 @@ apiVersion : apps/v1
 kind: Deployment
 metadata:
   name: "onebyoneaks-cc2d"
+  labels:
+    aadpodidbinding: azure-pod-identity-binding-selector
 spec:
   replicas: 2
   selector:
@@ -23,6 +25,19 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               value: sbailleul@onebyone-db
             - name: SPRING_DATASOURCE_PASSWORD
-              value: votu5632?,
+              valueFrom:
+                secretKeyRef:
+                  name: onebyone-db-pwd-secret
+                  key: key
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
 
-
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: spc-onebyone-kv
