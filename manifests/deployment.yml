@@ -25,19 +25,4 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               value: sbailleul@onebyone-db
             - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: onebyone-db-pwd-secret
-                  key: key
-          volumeMounts:
-            - name: secrets-store-inline
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
-
-      volumes:
-        - name: secrets-store-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: spc-onebyone-kv
+              value: votu5632?,
