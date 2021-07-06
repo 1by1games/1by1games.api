@@ -1,11 +1,9 @@
 package com.esgi.onebyone.infrastructure.repositories
 
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
-import com.esgi.onebyone.domain.room.DiceResult
 import com.esgi.onebyone.domain.room.Room
 import com.esgi.onebyone.domain.room.RoomId
 import com.esgi.onebyone.infrastructure.mappers.to
-import com.esgi.onebyone.infrastructure.models.DiceThrowModel
 import com.esgi.onebyone.infrastructure.models.MemberModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
@@ -51,6 +49,14 @@ class RoomRepositoryAdapter @Autowired constructor(
                     memberRepository.save(newMemberModel)
                 }
             }
+        }
+
+        val membersToRemove = roomSaved.members.filter { savedMember ->
+            !(room.members.map { member -> member.username }.contains(savedMember.account?.username))
+        }
+
+        membersToRemove.forEach {
+            memberRepository.delete(it)
         }
 
         return RoomId(roomSaved.id)
