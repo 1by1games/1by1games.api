@@ -7,8 +7,11 @@ import com.esgi.onebyone.application.rooms.create_room.RoomResume
 import com.esgi.onebyone.application.rooms.get_room_by_id.GetRoomByIdQuery
 import com.esgi.onebyone.application.rooms.join_room.JoinRoomCommand
 import com.esgi.onebyone.application.rooms.join_room.LeaveRoomCommand
+import com.esgi.onebyone.application.rooms.throw_dice_command.ThrowDiceCommand
 import com.esgi.onebyone.application.security.parse_token.ParseTokenQuery
 import com.esgi.onebyone.domain.commons.exceptions.DomainException
+import com.esgi.onebyone.dto.RoomSubscriptionDTO
+import com.esgi.onebyone.dto.ThrowDiceDTO
 import io.jkratz.mediator.core.Mediator
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -72,13 +75,14 @@ class RoomsController constructor(private val mediator: Mediator) {
     @PutMapping("/{roomId}/subscription")
     fun join(
         @PathVariable roomId: UUID,
+        @RequestBody roomSubscriptionDTO: RoomSubscriptionDTO,
         @RequestHeader headers: HttpHeaders
     ): ResponseEntity<Unit> {
         return try {
             val token = headers.getFirst(HttpHeaders.AUTHORIZATION) ?: throw Exception("no token")
             val username = mediator.dispatch(ParseTokenQuery(token))
             val account = mediator.dispatch(GetAccountByUsernameQuery(username))
-            val created = mediator.dispatch(JoinRoomCommand(roomId, account.id))
+            val created = mediator.dispatch(JoinRoomCommand(roomId, account.id, roomSubscriptionDTO.password))
 
             val uri =
                 MvcUriComponentsBuilder.fromMethodName(RoomsController::class.java, "getById", created.value.toString())
@@ -91,6 +95,25 @@ class RoomsController constructor(private val mediator: Mediator) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
     }
+
+    @PostMapping("/{id}/throw")
+    fun throwDices(
+        @RequestBody(required = false) throwDice: ThrowDiceDTO?,
+        @RequestHeader headers: HttpHeaders,
+        @PathVariable roomId: UUID,
+    ): ResponseEntity<Unit> {
+        return try {
+            val token = headers.getFirst(HttpHeaders.AUTHORIZATION) ?: throw Exception("no token")
+            val username = mediator.dispatch(ParseTokenQuery(token))
+            val account = mediator.dispatch(GetAccountByUsernameQuery(username))
+            mediator.dispatch(ThrowDiceCommand(throwDice?.amount, throwDice?.value, roomId, account.id))
+
+            return ResponseEntity.ok().build()
+
+        } catch (e: ApplicationException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).build()
+        } catch (e: DomainException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+        }
+    }
 }
-
-

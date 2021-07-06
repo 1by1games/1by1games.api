@@ -110,5 +110,20 @@ class RoomTest {
 
     //endregion
 
+    //region test password
+
+    @Test
+    fun throw_exception_on_bad_password() {
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.isPasswordGood("passpasword")
+        }
+    }
+
+    @Test
+    fun shall_not_do_anything_on_password_good() {
+        defaultRoom.isPasswordGood("password")
+    }
+
+
 
 }

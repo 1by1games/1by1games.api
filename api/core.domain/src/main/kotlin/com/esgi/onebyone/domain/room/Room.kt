@@ -89,5 +89,9 @@ class Room(
         _members.removeAt(_members.indexOf(_members.find { member -> member.username == removedMember.username }))
     }
 
-
+    fun isPasswordGood(testedPassword: String) {
+        if(password !== testedPassword) {
+            throw throw DomainException("Password invalid")
+        }
+    }
 }

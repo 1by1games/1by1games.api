@@ -2,6 +2,7 @@ package com.esgi.onebyone.application.rooms.join_room
 
 import com.esgi.onebyone.application.ApplicationException
 import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
+import com.esgi.onebyone.application.contracts.services.IHashingService
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
 import com.esgi.onebyone.domain.account.AccountID
 import com.esgi.onebyone.domain.room.Member
@@ -14,12 +15,14 @@ import java.util.*
 data class JoinRoomCommand(
     val roomId: UUID,
     val userId: UUID,
+    val password: String,
 ) : Request<RoomId>
 
 @Component
 class JoinRoomCommandHandler(
     val roomRepository: IRoomRepository,
     val accountRepository: IAccountsRepository,
+    val hashingService: IHashingService,
 ) : RequestHandler<JoinRoomCommand, RoomId> {
     override fun handle(request: JoinRoomCommand): RoomId {
 
@@ -28,7 +31,10 @@ class JoinRoomCommandHandler(
 
         val room = roomRepository.findById(RoomId(request.roomId))
 
+
         room?.let { it ->
+
+            room.isPasswordGood(hashingService.hashPassword(request.password))
             val member = Member(
                 user.id,
                 user.username,
