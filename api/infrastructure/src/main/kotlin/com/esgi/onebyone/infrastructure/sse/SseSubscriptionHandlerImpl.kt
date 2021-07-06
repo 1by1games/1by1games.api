@@ -2,12 +2,13 @@ package com.esgi.onebyone.infrastructure.sse
 
 import com.esgi.onebyone.application.sse.SseEventType
 import com.esgi.onebyone.application.sse.SseEventType.*
+import com.esgi.onebyone.application.sse.SseEmitterHandler
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 import org.springframework.stereotype.Component
 
 @Component
-class SseHandlerImpl: SseHandler {
+class SseSubscriptionHandlerImpl: SseSubscriptionHandler, SseEmitterHandler {
 
     val poolSse: HashMap<String, MutableList<SseEmitter>> = HashMap()
     val ghostSseConnection: HashMap<String, MutableList<SseEmitter>> = HashMap()
@@ -21,15 +22,6 @@ class SseHandlerImpl: SseHandler {
 
         poolSse[id]?.add(emitter)
         return emitter
-    }
-
-    override fun emitTo(userId: String, gameEventSerialized: String, emissionType: SseEventType) {
-        if (poolSse.containsKey(userId)) {
-            for (emitter in poolSse[userId]!!) {
-                this.emit(emitter, userId, gameEventSerialized, emissionType)
-            }
-        }
-        this.cleanEmitters()
     }
 
     private fun cleanEmitters() {
@@ -64,5 +56,14 @@ class SseHandlerImpl: SseHandler {
             }
             ghostSseConnection[userId]?.add(emitter)
         }
+    }
+
+    override fun emitTo(userId: String, gameEventSerialized: String, emissionType: SseEventType) {
+        if (poolSse.containsKey(userId)) {
+            for (emitter in poolSse[userId]!!) {
+                this.emit(emitter, userId, gameEventSerialized, emissionType)
+            }
+        }
+        this.cleanEmitters()
     }
 }

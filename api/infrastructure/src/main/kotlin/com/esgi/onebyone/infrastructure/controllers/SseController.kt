@@ -2,7 +2,7 @@ package com.esgi.onebyone.infrastructure.controllers
 
 import com.esgi.onebyone.application.accounts.queries.get_account_by_username.GetAccountByUsernameQuery
 import com.esgi.onebyone.application.security.parse_token.ParseTokenQuery
-import com.esgi.onebyone.infrastructure.sse.SseHandler
+import com.esgi.onebyone.infrastructure.sse.SseSubscriptionHandler
 import io.jkratz.mediator.core.Mediator
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Controller
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 @Controller
 @RequestMapping("sse")
 class SseController(
-    private val sseHandler: SseHandler,
+    private val sseSubscriptionHandler: SseSubscriptionHandler,
     private val mediator: Mediator
 ) {
     @GetMapping()
@@ -23,6 +23,6 @@ class SseController(
         val token = headers.getFirst(HttpHeaders.AUTHORIZATION) ?: throw Exception("no token")
         val username = mediator.dispatch(ParseTokenQuery(token))
         val account = mediator.dispatch(GetAccountByUsernameQuery(username))
-        return sseHandler.subscribeToSse(account.id.toString())
+        return sseSubscriptionHandler.subscribeToSse(account.id.toString())
     }
 }
