@@ -59,4 +59,8 @@ class RoomRepositoryAdapter @Autowired constructor(
     override fun doesRoomExistByNameAndState(name: String, state: Room.State): Boolean {
         return roomRepository.getByNameAndState(name, state).firstOrNull() != null
     }
+
+    override fun findById(id: RoomId): Room? {
+        return roomRepository.findByIdOrNull(id.value)?.to()
+    }
 }

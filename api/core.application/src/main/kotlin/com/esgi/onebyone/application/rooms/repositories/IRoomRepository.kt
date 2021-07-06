@@ -11,4 +11,5 @@ interface IRoomRepository {
     fun save(account: Room): RoomId
 
     fun doesRoomExistByNameAndState(name: String, state: Room.State) : Boolean
+    fun findById(id: RoomId): Room?
 }
