@@ -3,6 +3,7 @@ package com.esgi.onebyone.domain.room
 import com.esgi.onebyone.domain.commons.exceptions.DomainException
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.util.*
 
 
 class Room(
@@ -90,8 +91,11 @@ class Room(
     }
 
     fun isPasswordGood(testedPassword: String) {
-        if(password !== testedPassword) {
-            throw throw DomainException("Password invalid")
+        if(password != testedPassword) {
+            throw DomainException("Password invalid")
         }
+    }
+
+    fun canEmit(userId: UUID) {
     }
 }
