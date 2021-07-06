@@ -83,4 +83,32 @@ class RoomTest {
     //endregion
 
 
+    //region leave room
+    @Test
+    fun cannot_leave_room_if_not_in() {
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.removeMember(newMember)
+        }
+    }
+
+    @Test
+    fun cannot_leave_room_if_room_closed() {
+        defaultRoom.addMember(newMember)
+        defaultRoom.closeRoom()
+
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.removeMember(newMember)
+        }
+    }
+
+    @Test
+    fun author_cannot_leave_room() {
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.removeMember(roomAuthor)
+        }
+    }
+
+    //endregion
+
+
 }

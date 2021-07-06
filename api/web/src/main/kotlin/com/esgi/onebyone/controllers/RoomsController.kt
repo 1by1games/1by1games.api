@@ -6,6 +6,7 @@ import com.esgi.onebyone.application.rooms.create_room.CreateRoomCommand
 import com.esgi.onebyone.application.rooms.create_room.RoomResume
 import com.esgi.onebyone.application.rooms.get_room_by_id.GetRoomByIdQuery
 import com.esgi.onebyone.application.rooms.join_room.JoinRoomCommand
+import com.esgi.onebyone.application.rooms.join_room.LeaveRoomCommand
 import com.esgi.onebyone.application.security.parse_token.ParseTokenQuery
 import com.esgi.onebyone.domain.commons.exceptions.DomainException
 import io.jkratz.mediator.core.Mediator
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import java.util.*
+import javax.transaction.Transactional
 
 
 @RestController
@@ -43,7 +45,31 @@ class RoomsController constructor(private val mediator: Mediator) {
         }
     }
 
-    @PutMapping("/{roomId}/join")
+    @DeleteMapping("/{roomId}/subscription")
+    @Transactional
+    fun leave(
+        @PathVariable roomId: UUID,
+        @RequestHeader headers: HttpHeaders
+    ): ResponseEntity<Unit> {
+        return try {
+            val token = headers.getFirst(HttpHeaders.AUTHORIZATION) ?: throw Exception("no token")
+            val username = mediator.dispatch(ParseTokenQuery(token))
+            val account = mediator.dispatch(GetAccountByUsernameQuery(username))
+            val created = mediator.dispatch(LeaveRoomCommand(roomId, account.id))
+
+            val uri =
+                MvcUriComponentsBuilder.fromMethodName(RoomsController::class.java, "getById", created.value.toString())
+                    .build().toUri()
+            return ResponseEntity.created(uri).build()
+
+        } catch (e: ApplicationException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).build()
+        } catch (e: DomainException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+        }
+    }
+
+    @PutMapping("/{roomId}/subscription")
     fun join(
         @PathVariable roomId: UUID,
         @RequestHeader headers: HttpHeaders
