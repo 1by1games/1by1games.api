@@ -2,3 +2,11 @@ docker/postgres
 docker/application.env
 docker/deployment.yaml
 .idea
+/postgres
+/gradlew
+/gradle
+.gradlew.bat
+.gradle
+./.idea/
+.DS_STORE
+gradlew.bat
