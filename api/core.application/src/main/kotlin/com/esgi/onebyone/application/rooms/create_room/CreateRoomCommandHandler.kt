@@ -1,7 +1,6 @@
 package com.esgi.onebyone.application.rooms.create_room
 
 import com.esgi.onebyone.application.ApplicationException
-import com.esgi.onebyone.application.accounts.register_user.UserRegisterCommand
 import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
 import com.esgi.onebyone.application.contracts.services.IHashingService
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
@@ -12,9 +11,7 @@ import com.esgi.onebyone.domain.room.Room
 import com.esgi.onebyone.domain.room.RoomId
 import io.jkratz.mediator.core.Request
 import io.jkratz.mediator.core.RequestHandler
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 import java.util.*
 
 data class CreateRoomCommand(

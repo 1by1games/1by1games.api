@@ -53,7 +53,7 @@ class Room (
     }
 
     fun addMember(newMember: Member) {
-        if (members.any { member -> member.id === newMember.id }) {
+        if (members.any { member -> member.username === newMember.username  }) {
             throw DomainException("member already in room")
         }
         if (members.size >= roomSize) {
