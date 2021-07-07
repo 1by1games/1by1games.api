@@ -1,6 +1,6 @@
 package com.esgi.onebyone.application.sse
 
-enum class SseEventType {
+enum class SseEmissionType {
     HEARTBEAT,
     THROWS,
     TEXT,

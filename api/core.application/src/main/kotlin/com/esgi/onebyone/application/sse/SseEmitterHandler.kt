@@ -1,5 +1,5 @@
 package com.esgi.onebyone.application.sse
 
 interface SseEmitterHandler {
-    fun emitTo(userId: String, gameEventSerialized: String, emissionType: SseEventType)
+    fun <T> emitTo(userId: String, objectEmitter: T, emissionType: SseEmissionType)
 }

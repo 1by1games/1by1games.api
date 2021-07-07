@@ -3,6 +3,7 @@ package com.esgi.onebyone.application.rooms.throw_dice_command
 import com.esgi.onebyone.application.ApplicationException
 import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
+import com.esgi.onebyone.application.sse.SseEmissionType
 import com.esgi.onebyone.application.sse.SseEmitterHandler
 import com.esgi.onebyone.application.webClient.WebClient
 import com.esgi.onebyone.domain.account.AccountID
@@ -52,7 +53,13 @@ class ThrowDiceCommandHandler(
 
         roomRepository.save(room)
 
-
+        room.members.forEach { memberReceivingThrow ->
+            sseEmitterHandler.emitTo(
+                memberReceivingThrow.accountId.toString(),
+                throwResult,
+                SseEmissionType.THROWS
+            )
+        }
     }
 
 }

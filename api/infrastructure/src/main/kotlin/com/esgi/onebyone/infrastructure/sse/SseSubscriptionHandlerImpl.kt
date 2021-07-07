@@ -1,17 +1,19 @@
 package com.esgi.onebyone.infrastructure.sse
 
-import com.esgi.onebyone.application.sse.SseEventType
-import com.esgi.onebyone.application.sse.SseEventType.*
+import com.esgi.onebyone.application.sse.SseEmissionType
+import com.esgi.onebyone.application.sse.SseEmissionType.HEARTBEAT
 import com.esgi.onebyone.application.sse.SseEmitterHandler
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 import org.springframework.stereotype.Component
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 @Component
-class SseSubscriptionHandlerImpl: SseSubscriptionHandler, SseEmitterHandler {
+class SseSubscriptionHandlerImpl : SseSubscriptionHandler, SseEmitterHandler {
 
     val poolSse: HashMap<String, MutableList<SseEmitter>> = HashMap()
     val ghostSseConnection: HashMap<String, MutableList<SseEmitter>> = HashMap()
+    private val mapper = jacksonObjectMapper()
 
     override fun subscribeToSse(id: String): SseEmitter {
         val emitter = SseEmitter(-1L)
@@ -44,7 +46,7 @@ class SseSubscriptionHandlerImpl: SseSubscriptionHandler, SseEmitterHandler {
         this.cleanEmitters()
     }
 
-    private fun emit(emitter: SseEmitter, userId: String, emission: String, emissionType: SseEventType) {
+    private fun emit(emitter: SseEmitter, userId: String, emission: String, emissionType: SseEmissionType) {
         val event = SseEmitter.event()
         event.data(SseJacket(emissionType, emission))
 
@@ -58,10 +60,12 @@ class SseSubscriptionHandlerImpl: SseSubscriptionHandler, SseEmitterHandler {
         }
     }
 
-    override fun emitTo(userId: String, gameEventSerialized: String, emissionType: SseEventType) {
+    override fun <T> emitTo(userId: String, objectEmitter: T, emissionType: SseEmissionType) {
+        val objectSerialized = mapper.writeValueAsString(objectEmitter)
+
         if (poolSse.containsKey(userId)) {
             for (emitter in poolSse[userId]!!) {
-                this.emit(emitter, userId, gameEventSerialized, emissionType)
+                this.emit(emitter, userId, objectSerialized, emissionType)
             }
         }
         this.cleanEmitters()
