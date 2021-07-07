@@ -10,3 +10,5 @@ docker/deployment.yaml
 ./.idea/
 .DS_STORE
 gradlew.bat
+/web/build/
+/application.env

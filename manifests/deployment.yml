@@ -1,21 +1,21 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: "onebyoneaks-cc2d"
+  name: "onebyone-api"
   labels:
     aadpodidbinding: azure-pod-identity-binding-selector
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: "onebyoneaks-cc2d"
+      app: "onebyone-api"
   template:
     metadata:
       labels:
-        app: "onebyoneaks-cc2d"
+        app: "onebyone-api"
     spec:
       containers:
-        - name: "onebyoneaks-cc2d"
+        - name: "onebyone-api"
           image: "onebyonedr.azurecr.io/onebyoneaks"
           ports:
           - containerPort: 8080
