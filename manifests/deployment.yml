@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: "onebyone-api"
-          image: "onebyonedr.azurecr.io/onebyoneaks"
+          image: "onebyone.azurecr.io/onebyone-api"
           ports:
           - containerPort: 8080
           env:

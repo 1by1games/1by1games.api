@@ -27,8 +27,8 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE/api" -f  "api/Dockerfile" -t onebyone.azurecr.io/onebyoneaks:${{ github.sha }} --label dockerfile-path=api/Dockerfile
-        docker push onebyone.azurecr.io/onebyoneaks:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/api" -f  "api/Dockerfile" -t onebyone.azurecr.io/onebyone-api:${{ github.sha }} --label dockerfile-path=api/Dockerfile
+        docker push onebyone.azurecr.io/onebyone-api:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
       id: login
@@ -58,6 +58,6 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          onebyone.azurecr.io/onebyoneaks:${{ github.sha }}
+          onebyone.azurecr.io/onebyone-api:${{ github.sha }}
         imagepullsecrets: |
           onebyoneaksdockerauth   
