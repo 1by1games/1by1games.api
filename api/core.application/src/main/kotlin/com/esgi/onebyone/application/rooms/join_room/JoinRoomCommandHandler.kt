@@ -40,6 +40,7 @@ class JoinRoomCommandHandler(
                 user.username,
                 false,
                 sortedSetOf(),
+                request.userId,
             )
 
             it.addMember(member)

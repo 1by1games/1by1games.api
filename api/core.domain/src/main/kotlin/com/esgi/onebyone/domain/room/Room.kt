@@ -3,7 +3,6 @@ package com.esgi.onebyone.domain.room
 import com.esgi.onebyone.domain.commons.exceptions.DomainException
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
 
 
 class Room(
@@ -91,11 +90,27 @@ class Room(
     }
 
     fun isPasswordGood(testedPassword: String) {
-        if(password != testedPassword) {
+        if (password != testedPassword) {
             throw DomainException("Password invalid")
         }
     }
 
-    fun canEmit(userId: UUID) {
+    fun canThrowDice(member: Member) {
+        if (state == State.CLOSED) {
+            throw DomainException("No emission possible on closed room")
+        }
+
+        if (members.none { roomMember -> roomMember.username == member.username }) {
+            throw DomainException("Member is not member of this room")
+        }
+
+    }
+
+    fun addThrowToMember(throwResult: DiceResult, memberToUpdate: Member) {
+        _members.find { member -> memberToUpdate.username == member.username }?.let { member ->
+            member.diceThrows.add(throwResult)
+            return
+        }
+        throw DomainException("Member does not exist")
     }
 }

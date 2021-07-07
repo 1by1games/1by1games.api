@@ -40,10 +40,11 @@ class CreateRoomCommandHandler constructor(private val repository: IRoomReposito
                 ?: throw ApplicationException("User not found")
 
         val author = Member(
-                AccountID(request.authorId),
-                authorAccount.username,
-                true,
-                sortedSetOf()
+            AccountID(request.authorId),
+            authorAccount.username,
+            true,
+            sortedSetOf(),
+            authorAccount.id.value
         )
 
         val newRoom = Room.create(

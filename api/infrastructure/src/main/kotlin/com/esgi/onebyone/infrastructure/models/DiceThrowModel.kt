@@ -29,6 +29,6 @@ class DiceThrowModel (
     @ManyToOne
     @Type(type = "uuid-char")
     @JoinColumn(name = "member_id")
-    @MapsId("memberId")
+//    @MapsId("memberId")
     var member: MemberModel
 )

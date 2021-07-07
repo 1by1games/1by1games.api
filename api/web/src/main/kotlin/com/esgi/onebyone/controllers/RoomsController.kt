@@ -96,7 +96,7 @@ class RoomsController constructor(private val mediator: Mediator) {
         }
     }
 
-    @PostMapping("/{id}/throw")
+    @PostMapping("/{roomId}/dicesThrow")
     fun throwDices(
         @RequestBody(required = false) throwDice: ThrowDiceDTO?,
         @RequestHeader headers: HttpHeaders,

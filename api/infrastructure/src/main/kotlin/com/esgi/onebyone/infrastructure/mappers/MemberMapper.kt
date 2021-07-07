@@ -7,6 +7,7 @@ import com.esgi.onebyone.infrastructure.models.MemberModel
 
 fun MemberModel.to() = Member(
         id = AccountID(id),
+        accountId = account?.id,
         username = account!!.username,
         isAuthor = isAuthor,
         diceThrows = diceThrows.map { it.to() }.toSortedSet{ a, b -> a.throwDate.compareTo(b.throwDate)}

@@ -17,7 +17,7 @@ class RoomTest {
 
     @BeforeEach
     fun init() {
-        roomAuthor = Member(AccountID( UUID.randomUUID()), "gevinak", true , sortedSetOf<DiceResult>() )
+        roomAuthor = Member(AccountID( UUID.randomUUID()), "gevinak", true, sortedSetOf<DiceResult>(), account?.id)
         roomDefaultDice= Dice(6, 2)
         defaultRoom = Room.create(
                 id = RoomId(UUID.randomUUID()),
@@ -27,10 +27,12 @@ class RoomTest {
                 roomSize = 5,
                 currentDice = roomDefaultDice)
         newMember = Member(
-                id = AccountID(UUID.randomUUID()),
-                username = "toto",
-                isAuthor = false,
-                diceThrows = sortedSetOf<DiceResult>())
+            id = AccountID(UUID.randomUUID()),
+            username = "toto",
+            isAuthor = false,
+            diceThrows = sortedSetOf<DiceResult>(),
+            accountId = account?.id
+        )
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.esgi.onebyone.infrastructure.repositories
 
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
+import com.esgi.onebyone.domain.room.Member
 import com.esgi.onebyone.domain.room.Room
 import com.esgi.onebyone.domain.room.RoomId
 import com.esgi.onebyone.infrastructure.mappers.to
@@ -30,17 +31,19 @@ class RoomRepositoryAdapter @Autowired constructor(
 
         room.members.forEach { memberEntity ->
             val memberSaved =
-                memberRepository.findByAccount_IdAndRoom_Id(memberEntity.id.value, roomSaved.id).firstOrNull()
-            if (memberSaved != null) {
-                val savedThrows = memberSaved.diceThrows
+                memberRepository.findById(memberEntity.id.value)
+            if (memberSaved.isPresent) {
+                val memberEntityToSave = memberSaved.get()
+                val savedThrows = memberEntityToSave.diceThrows
                 val diceThrowsToSave = memberEntity.diceThrows.filter { newDiceThrow ->
                     savedThrows.none { savedThrow ->
                         savedThrow.throwDate == newDiceThrow.throwDate
                     }
                 }
-                memberSaved.diceThrows += diceThrowsToSave.map { dice -> dice.to(memberSaved) }
-                memberSaved.isAuthor = memberEntity.isAuthor
-                memberRepository.save(memberSaved)
+
+                memberEntityToSave.diceThrows += diceThrowsToSave.map { dice -> dice.to(memberEntityToSave) }
+                memberEntityToSave.isAuthor = memberEntity.isAuthor
+                memberRepository.save(memberEntityToSave)
             } else {
                 accountRepository.findByIdOrNull(memberEntity.id.value)?.let { accountModel ->
                     val newMemberModel =
@@ -68,5 +71,9 @@ class RoomRepositoryAdapter @Autowired constructor(
 
     override fun findById(id: RoomId): Room? {
         return roomRepository.findByIdOrNull(id.value)?.to()
+    }
+
+    override fun findMemberByAccountIdAndRoomId(accountId: UUID, roomId: UUID): Member? {
+        return memberRepository.findByAccount_IdAndRoom_Id(accountId, roomId).firstOrNull()?.to()
     }
 }

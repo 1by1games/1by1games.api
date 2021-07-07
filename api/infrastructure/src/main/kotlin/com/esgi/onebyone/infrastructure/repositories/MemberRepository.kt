@@ -11,4 +11,5 @@ import java.util.*
 interface MemberRepository : JpaRepository<MemberModel, UUID> {
 
     fun findByAccount_IdAndRoom_Id(accountId: UUID, roomId: UUID): List<MemberModel>
+    override fun findById(id: UUID): Optional<MemberModel>
 }

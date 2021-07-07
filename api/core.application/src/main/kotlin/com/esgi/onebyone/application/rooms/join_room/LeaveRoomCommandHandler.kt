@@ -33,6 +33,7 @@ class LeaveRoomCommandHandler(
                 user.username,
                 false,
                 sortedSetOf(),
+                request.userId,
             )
 
             it.removeMember(member)
