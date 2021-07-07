@@ -95,22 +95,19 @@ class Room(
         }
     }
 
-    fun canThrowDice(member: Member) {
+    fun addThrowToMember(diceResult: DiceResult, memberToUpdate: Member) {
+
         if (state == State.CLOSED) {
             throw DomainException("No emission possible on closed room")
         }
 
-        if (members.none { roomMember -> roomMember.username == member.username }) {
+        if (members.none { roomMember -> roomMember.username == memberToUpdate.username }) {
             throw DomainException("Member is not member of this room")
         }
 
-    }
-
-    fun addThrowToMember(throwResult: DiceResult, memberToUpdate: Member) {
-        _members.find { member -> memberToUpdate.username == member.username }?.let { member ->
-            member.diceThrows.add(throwResult)
+        members.find { member -> memberToUpdate.username == member.username }?.let { member ->
+            member.diceThrows.add(diceResult)
             return
         }
-        throw DomainException("Member does not exist")
     }
 }

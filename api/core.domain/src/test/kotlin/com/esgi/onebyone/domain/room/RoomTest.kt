@@ -5,6 +5,7 @@ import com.esgi.onebyone.domain.commons.exceptions.DomainException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -12,26 +13,35 @@ class RoomTest {
 
     lateinit var roomAuthor: Member
     lateinit var roomDefaultDice: Dice
+    lateinit var memberDefaultThrow: DiceResult
     lateinit var defaultRoom: Room
     lateinit var newMember: Member
 
     @BeforeEach
     fun init() {
-        roomAuthor = Member(AccountID( UUID.randomUUID()), "gevinak", true, sortedSetOf<DiceResult>(), account?.id)
-        roomDefaultDice= Dice(6, 2)
+        val roomAuthorId = AccountID(UUID.randomUUID())
+        roomAuthor =
+            Member(AccountID(UUID.randomUUID()), "gevinak", true, sortedSetOf<DiceResult>(), roomAuthorId.value)
+        roomDefaultDice = Dice(6, 2)
         defaultRoom = Room.create(
-                id = RoomId(UUID.randomUUID()),
-                name = "myroom",
-                password = "password",
-                author = roomAuthor,
-                roomSize = 5,
-                currentDice = roomDefaultDice)
+            id = RoomId(UUID.randomUUID()),
+            name = "myroom",
+            password = "password",
+            author = roomAuthor,
+            roomSize = 5,
+            currentDice = roomDefaultDice
+        )
         newMember = Member(
             id = AccountID(UUID.randomUUID()),
             username = "toto",
             isAuthor = false,
             diceThrows = sortedSetOf<DiceResult>(),
-            accountId = account?.id
+            accountId = UUID.randomUUID(),
+        )
+        memberDefaultThrow = DiceResult(
+            dice = roomDefaultDice,
+            result = roomDefaultDice.size,
+            throwDate = LocalDateTime.now(),
         )
     }
 
@@ -40,7 +50,6 @@ class RoomTest {
 
         Assertions.assertEquals(roomAuthor.id, defaultRoom.author.id)
     }
-
 
     //region join room
 
@@ -59,7 +68,8 @@ class RoomTest {
             password = "password",
             author = roomAuthor,
             roomSize = 1,
-            currentDice = roomDefaultDice)
+            currentDice = roomDefaultDice
+        )
         Assertions.assertThrows(DomainException::class.java) {
             smallRoom.addMember(newMember)
         }
@@ -126,6 +136,31 @@ class RoomTest {
         defaultRoom.isPasswordGood("password")
     }
 
+    //endregion
+
+    //region throw dice
+
+    @Test
+    fun throw_dice_work() {
+        defaultRoom.addThrowToMember(memberDefaultThrow, roomAuthor)
+    }
+
+    @Test
+    fun cannot_throw_dice_on_closed_room() {
+        defaultRoom.closeRoom()
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.addThrowToMember(memberDefaultThrow, roomAuthor)
+        }
+    }
+
+    @Test
+    fun cannot_throw_if_member_not_in_room() {
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.addThrowToMember(memberDefaultThrow, newMember)
+        }
+    }
+
+    //endregion
 
 
 }

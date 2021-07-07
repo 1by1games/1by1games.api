@@ -35,9 +35,6 @@ class ThrowDiceCommandHandler(
         val member = roomRepository.findMemberByAccountIdAndRoomId(request.userId, request.roomId)
             ?: throw ApplicationException("This user in not in the room")
 
-        room.canThrowDice(member)
-
-
         val dice = if (!(request.amount == null || request.value == null))
             Dice(request.value, request.amount)
         else
