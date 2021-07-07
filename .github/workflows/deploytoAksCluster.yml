@@ -1,43 +1,39 @@
 on: [push]
 jobs:
-
-  test:
-    strategy:
-      matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./api/gradlew
-      - name: Test with gradle
-        run: ./api/gradlew test -p api --no-daemon
-
   build-and-deploy:
-    needs:
-      - test
     runs-on: ubuntu-latest
     steps:
+    
     - uses: actions/checkout@master
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Create ACR
+      id: create-acr
+      run: |
+        az acr create -n onebyone -g onebyone9e6a-rg --location "West Europe" --sku Standard --admin-enabled
+        echo "::set-output name=acr_username::`az acr credential show -n onebyone --query username | xargs`"
+        echo "::set-output name=acr_password::`az acr credential show -n onebyone --query passwords[0].value | xargs`"
+        echo "::add-mask::`az acr credential show -n onebyone --query passwords[0].value | xargs`"
+
     - uses: azure/docker-login@v1
       with:
-        login-server: onebyonedr.azurecr.io
-        username: ${{ secrets.acr_onebyonedr_username }}
-        password: ${{ secrets.acr_onebyonedr_password }}
-    
+        login-server: onebyone.azurecr.io
+        username: ${{ steps.create-acr.outputs.acr_username }}
+        password: ${{ steps.create-acr.outputs.acr_password }}
+
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE/api" -f  "api/Dockerfile" -t onebyonedr.azurecr.io/onebyoneaks:${{ github.sha }} --label dockerfile-path=api/Dockerfile
-        docker push onebyonedr.azurecr.io/onebyoneaks:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/api" -f  "api/Dockerfile" -t onebyone.azurecr.io/onebyoneaks:${{ github.sha }} --label dockerfile-path=api/Dockerfile
+        docker push onebyone.azurecr.io/onebyoneaks:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
+      id: login
       with:
          kubeconfig: ${{ secrets.aks_onebyoneaks_kubeConfig }}
-      id: login
     
     - name: Create namespace
       run: |
@@ -50,9 +46,9 @@ jobs:
     - uses: azure/k8s-create-secret@v1
       with:
         namespace: default
-        container-registry-url: onebyonedr.azurecr.io
-        container-registry-username: ${{ secrets.acr_onebyonedr_username }}
-        container-registry-password: ${{ secrets.acr_onebyonedr_password }}
+        container-registry-url: onebyone.azurecr.io
+        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
+        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
         secret-name: onebyoneaksdockerauth
        
     - uses: azure/k8s-deploy@v1.2
@@ -62,6 +58,6 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          onebyonedr.azurecr.io/onebyoneaks:${{ github.sha }}
+          onebyone.azurecr.io/onebyoneaks:${{ github.sha }}
         imagepullsecrets: |
-          onebyoneaksdockerauth
+          onebyoneaksdockerauth   

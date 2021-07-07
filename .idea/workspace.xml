@@ -5,79 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67047b18-5bb5-4d2c-81f4-6b8df030f1c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/ApplicationException.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/login_user/ConnectedUser.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/login_user/LoginUserCommandHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/queries/UserResume.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/queries/get_account_by_id/GetAccountByIdQueryHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/queries/get_account_by_username/GetAccountByUsernameQueryHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/queries/get_all_accounts/GetAllAccountsQueryHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/register_user/RegisterUserCommandHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/accounts/repositories/IAccountsRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/contracts/services/IHashingService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/contracts/services/ITokenService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/rooms/create_room/CreateRoomCommandHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/rooms/repositories/IRoomRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/security/parse_token/ParseTokenQueryHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.application/src/main/kotlin/com/esgi/onebyone/application/security/sign_token/SignTokenQueryHandler.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/account/Account.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/account/AccountID.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/account/AccountsDomainService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/account/Role.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/commons/exceptions/DomainException.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/room/Dice.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/room/DiceResult.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/room/Member.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/room/Room.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/main/kotlin/com/esgi/onebyone/domain/room/RoomId.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core.domain/src/test/kotlin/com/esgi/onebyone/domain/room/RoomTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/mappers/AccountMapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/mappers/DiceThrowMapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/mappers/MemberMapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/mappers/RoomMapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/models/AccountModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/models/DiceThrowModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/models/MemberModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/models/RoomModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/repositories/AccountRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/repositories/AccountRepositoryAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/repositories/MemberRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/repositories/RoomRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/repositories/RoomRepositoryAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/security/HashingService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/security/SecurityConstants.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/kotlin/com/esgi/onebyone/infrastructure/security/TokenService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/test/kotlin/com/esgi/onebyone/infrastructure/HashingServiceTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/MediatorConfig.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/OnebyoneApplication.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/SpringFoxConfig.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/WebConfig.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/commons/JWTAuthentication.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/controllers/AccountsController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/controllers/RoomsController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/security/AuthTokenSecurityProvider.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/security/Credential.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/security/JWTAuthenticationFilter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/security/JWTAuthorizationFilter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/security/SecurityConstants.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/kotlin/com/esgi/onebyone/security/WebSecurity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/test/kotlin/com/esgi/onebyone/web/OnebyoneApplicationTests.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploytoAksCluster-1.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploytoAksCluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploytoAksCluster.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifests/deployment-1.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifests/service-1.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +24,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectId" id="1rV26tmk8XgxEMsIjvmtWAgz3ku" />
   <component name="ProjectViewState">
@@ -137,6 +71,10 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Docker.docker.onebyone-api: Compose Deployment" />
+      <item itemvalue="Docker.docker.onebyone-postgres: Compose Deployment" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Docker.docker.onebyone-api: Compose Deployment" />
@@ -161,5 +99,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
