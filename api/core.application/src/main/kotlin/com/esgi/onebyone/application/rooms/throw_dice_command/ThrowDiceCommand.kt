@@ -5,7 +5,7 @@ import com.esgi.onebyone.application.accounts.repositories.IAccountsRepository
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
 import com.esgi.onebyone.application.sse.SseEmissionType
 import com.esgi.onebyone.application.sse.SseEmitterHandler
-import com.esgi.onebyone.application.webClient.WebClient
+import com.esgi.onebyone.application.webClient.ExternalRequestHandler
 import com.esgi.onebyone.domain.account.AccountID
 import com.esgi.onebyone.domain.room.Dice
 import com.esgi.onebyone.domain.room.DiceResult
@@ -23,7 +23,7 @@ class ThrowDiceCommandHandler(
     val sseEmitterHandler: SseEmitterHandler,
     private val roomRepository: IRoomRepository,
     private val accountRepository: IAccountsRepository,
-    private val webClient: WebClient,
+    private val externalRequestHandler: ExternalRequestHandler,
 ) : RequestHandler<ThrowDiceCommand, Unit> {
     override fun handle(request: ThrowDiceCommand) {
         val user = accountRepository.findById(AccountID(request.userId))
@@ -42,7 +42,7 @@ class ThrowDiceCommandHandler(
 
         dice.canBeThrow()
 
-        val throwResultFromApi = webClient.getRandomFromApi(dice.size, dice.amount)
+        val throwResultFromApi = externalRequestHandler.getRandomFromApi(dice.size, dice.amount)
 
         val throwResult = DiceResult(dice, throwResultFromApi, LocalDateTime.now())
 
