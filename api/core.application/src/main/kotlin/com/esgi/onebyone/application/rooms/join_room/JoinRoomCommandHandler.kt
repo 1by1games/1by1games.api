@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 data class JoinRoomCommand(
-    val roomId: UUID,
+    val roomName: String,
     val userId: UUID,
     val password: String,
 ) : Request<RoomId>
@@ -29,7 +29,7 @@ class JoinRoomCommandHandler(
         val user = accountRepository.findById(AccountID(request.userId))
             ?: throw ApplicationException("User not found")
 
-        val room = roomRepository.findById(RoomId(request.roomId))
+        val room = roomRepository.findByName(request.roomName)
 
 
         room?.let { it ->

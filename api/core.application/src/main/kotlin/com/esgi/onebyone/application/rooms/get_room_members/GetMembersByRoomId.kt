@@ -6,10 +6,13 @@ import com.esgi.onebyone.domain.room.RoomId
 import io.jkratz.mediator.core.Request
 import io.jkratz.mediator.core.RequestHandler
 import java.util.*
+import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
 data class GetMembersByRoomIdQuery(val roomId: UUID, val userId: UUID) : Request<List<MemberResume>>
 
 
+@Component
 class GetMembersByRoomIdQueryHandler(val roomRepository: IRoomRepository): RequestHandler<GetMembersByRoomIdQuery, List<MemberResume>> {
     override fun handle(request: GetMembersByRoomIdQuery): List<MemberResume> {
         val room = roomRepository.findById(RoomId(request.roomId))

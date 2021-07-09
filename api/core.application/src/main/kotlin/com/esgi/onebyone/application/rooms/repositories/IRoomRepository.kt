@@ -16,4 +16,5 @@ interface IRoomRepository {
     fun findById(id: RoomId): Room?
     fun findMemberByAccountIdAndRoomId(accountId: UUID, roomId: UUID): Member?
     fun findMembersByRoomId(roomId: UUID): List<Member>
+    fun findByName(roomName: String): Room?
 }

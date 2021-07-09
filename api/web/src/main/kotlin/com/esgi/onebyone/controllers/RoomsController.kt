@@ -3,8 +3,10 @@ package com.esgi.onebyone.controllers
 import com.esgi.onebyone.application.ApplicationException
 import com.esgi.onebyone.application.accounts.queries.get_account_by_username.GetAccountByUsernameQuery
 import com.esgi.onebyone.application.rooms.create_room.CreateRoomCommand
-import com.esgi.onebyone.application.rooms.get_room_by_id.RoomResume
 import com.esgi.onebyone.application.rooms.get_room_by_id.GetRoomByIdQuery
+import com.esgi.onebyone.application.rooms.get_room_by_id.RoomResume
+import com.esgi.onebyone.application.rooms.get_room_members.GetMembersByRoomIdQuery
+import com.esgi.onebyone.application.rooms.get_room_members.MemberResume
 import com.esgi.onebyone.application.rooms.join_room.JoinRoomCommand
 import com.esgi.onebyone.application.rooms.join_room.LeaveRoomCommand
 import com.esgi.onebyone.application.rooms.throw_dice_command.ThrowDiceCommand
@@ -48,11 +50,21 @@ class RoomsController constructor(private val mediator: Mediator) {
         }
     }
 
-    @GetMapping("{id}/members")
-    fun getMembersByRoomID(@PathVariable id: UUID): ResponseEntity<List<MemberResume>> {
+    @GetMapping("{roomId}/members")
+    fun getMembersByRoomID(
+        @PathVariable roomId: UUID,
+        @RequestHeader headers: HttpHeaders
+    ): ResponseEntity<List<MemberResume>> {
         return try {
-            ResponseEntity.ok(mediator.dispatch(GetRoomByIdQuery(id)))
+            val token = headers.getFirst(HttpHeaders.AUTHORIZATION) ?: throw Exception("no token")
+            val username = mediator.dispatch(ParseTokenQuery(token))
+            val account = mediator.dispatch(GetAccountByUsernameQuery(username))
+            val members = mediator.dispatch(GetMembersByRoomIdQuery(roomId, account.id))
+
+            ResponseEntity.ok(members)
         } catch (e: ApplicationException) {
+            ResponseEntity.notFound().build()
+        } catch (e: DomainException) {
             ResponseEntity.notFound().build()
         }
     }
@@ -81,9 +93,9 @@ class RoomsController constructor(private val mediator: Mediator) {
         }
     }
 
-    @PutMapping("/{roomId}/subscription")
+    @PutMapping("/{roomName}/subscription")
     fun join(
-        @PathVariable roomId: UUID,
+        @PathVariable roomName: String,
         @RequestBody roomSubscriptionDTO: RoomSubscriptionDTO,
         @RequestHeader headers: HttpHeaders
     ): ResponseEntity<Unit> {
@@ -91,7 +103,7 @@ class RoomsController constructor(private val mediator: Mediator) {
             val token = headers.getFirst(HttpHeaders.AUTHORIZATION) ?: throw Exception("no token")
             val username = mediator.dispatch(ParseTokenQuery(token))
             val account = mediator.dispatch(GetAccountByUsernameQuery(username))
-            val created = mediator.dispatch(JoinRoomCommand(roomId, account.id, roomSubscriptionDTO.password))
+            val created = mediator.dispatch(JoinRoomCommand(roomName, account.id, roomSubscriptionDTO.password))
 
             val uri =
                 MvcUriComponentsBuilder.fromMethodName(RoomsController::class.java, "getById", created.value.toString())

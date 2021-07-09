@@ -80,4 +80,8 @@ class RoomRepositoryAdapter @Autowired constructor(
     override fun findMembersByRoomId(roomId: UUID): List<Member> {
         return memberRepository.findByRoom_Id(roomId).map { memberModel -> memberModel.to() }
     }
+
+    override fun findByName(roomName: String): Room? {
+        return roomRepository.getByName(roomName)?.to()
+    }
 }

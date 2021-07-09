@@ -12,4 +12,5 @@ import java.util.*
 interface RoomRepository : JpaRepository<RoomModel, UUID> {
 
     fun getByNameAndState(name: String, state: Room.State) : List<RoomModel>
+    fun getByName(name: String): RoomModel?
 }
