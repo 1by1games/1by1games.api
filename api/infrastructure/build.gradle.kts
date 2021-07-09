@@ -10,6 +10,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.5")
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation(project(":core.domain"))
@@ -18,11 +19,9 @@ dependencies {
     implementation("com.auth0:java-jwt:$javaJwtVersion")
     implementation("org.apache.commons:commons-text:1.9")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation ("io.jkratz.springmediatr:spring-mediatr:1.1-RELEASE")
+    implementation("io.jkratz.springmediatr:spring-mediatr:1.1-RELEASE")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
-
 
 
 }

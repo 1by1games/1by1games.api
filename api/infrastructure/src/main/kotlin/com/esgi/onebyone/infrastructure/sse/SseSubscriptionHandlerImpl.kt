@@ -3,17 +3,26 @@ package com.esgi.onebyone.infrastructure.sse
 import com.esgi.onebyone.application.sse.SseEmissionType
 import com.esgi.onebyone.application.sse.SseEmissionType.HEARTBEAT
 import com.esgi.onebyone.application.sse.SseEmitterHandler
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.util.StdDateFormat
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
+
 
 @Component
 class SseSubscriptionHandlerImpl : SseSubscriptionHandler, SseEmitterHandler {
 
     val poolSse: HashMap<String, MutableList<SseEmitter>> = HashMap()
     val ghostSseConnection: HashMap<String, MutableList<SseEmitter>> = HashMap()
-    private val mapper = jacksonObjectMapper()
+    private val mapper: ObjectMapper = ObjectMapper()
+
+    init {
+        mapper.registerModule(JavaTimeModule())
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    }
 
     override fun subscribeToSse(id: String): SseEmitter {
         val emitter = SseEmitter(-1L)
