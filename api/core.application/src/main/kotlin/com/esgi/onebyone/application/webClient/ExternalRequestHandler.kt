@@ -1,6 +1,6 @@
 package com.esgi.onebyone.application.webClient
 
-interface WebClient {
+interface ExternalRequestHandler {
 
     fun getRandomFromApi(value: Int, amount: Int): Int
 }
