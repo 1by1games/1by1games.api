@@ -180,5 +180,6 @@ class RoomTest {
         defaultRoom.canUserGetInfo(roomAuthorId)
     }
 
+    //endregion
 
 }

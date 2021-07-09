@@ -138,7 +138,3 @@ class RoomsController constructor(private val mediator: Mediator) {
         }
     }
 }
-
-class MemberResume {
-
-}

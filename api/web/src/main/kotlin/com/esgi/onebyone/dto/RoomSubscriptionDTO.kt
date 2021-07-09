@@ -1,3 +1,5 @@
 package com.esgi.onebyone.dto
 
-data class RoomSubscriptionDTO(val password: String)
+data class RoomSubscriptionDTO(
+    val password: String
+    )
