@@ -3,7 +3,7 @@ package com.esgi.onebyone.controllers
 import com.esgi.onebyone.application.ApplicationException
 import com.esgi.onebyone.application.accounts.queries.get_account_by_username.GetAccountByUsernameQuery
 import com.esgi.onebyone.application.rooms.create_room.CreateRoomCommand
-import com.esgi.onebyone.application.rooms.create_room.RoomResume
+import com.esgi.onebyone.application.rooms.get_room_by_id.RoomResume
 import com.esgi.onebyone.application.rooms.get_room_by_id.GetRoomByIdQuery
 import com.esgi.onebyone.application.rooms.join_room.JoinRoomCommand
 import com.esgi.onebyone.application.rooms.join_room.LeaveRoomCommand
@@ -41,6 +41,15 @@ class RoomsController constructor(private val mediator: Mediator) {
 
     @GetMapping("{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<RoomResume> {
+        return try {
+            ResponseEntity.ok(mediator.dispatch(GetRoomByIdQuery(id)))
+        } catch (e: ApplicationException) {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @GetMapping("{id}/members")
+    fun getMembersByRoomID(@PathVariable id: UUID): ResponseEntity<List<MemberResume>> {
         return try {
             ResponseEntity.ok(mediator.dispatch(GetRoomByIdQuery(id)))
         } catch (e: ApplicationException) {
@@ -116,4 +125,8 @@ class RoomsController constructor(private val mediator: Mediator) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
     }
+}
+
+class MemberResume {
+
 }

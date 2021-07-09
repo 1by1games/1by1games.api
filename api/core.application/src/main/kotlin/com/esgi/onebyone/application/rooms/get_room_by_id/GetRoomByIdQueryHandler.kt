@@ -1,7 +1,6 @@
 package com.esgi.onebyone.application.rooms.get_room_by_id
 
 import com.esgi.onebyone.application.ApplicationException
-import com.esgi.onebyone.application.rooms.create_room.RoomResume
 import com.esgi.onebyone.application.rooms.repositories.IRoomRepository
 import com.esgi.onebyone.domain.room.RoomId
 import io.jkratz.mediator.core.Request

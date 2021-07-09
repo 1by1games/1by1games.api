@@ -3,6 +3,7 @@ package com.esgi.onebyone.domain.room
 import com.esgi.onebyone.domain.commons.exceptions.DomainException
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.util.*
 
 
 class Room(
@@ -108,6 +109,12 @@ class Room(
         members.find { member -> memberToUpdate.username == member.username }?.let { member ->
             member.diceThrows.add(diceResult)
             return
+        }
+    }
+
+    fun canUserGetInfo(userId: UUID) {
+        if (members.none { member -> member.accountId == userId}) {
+            throw DomainException("User is not in the room")
         }
     }
 }

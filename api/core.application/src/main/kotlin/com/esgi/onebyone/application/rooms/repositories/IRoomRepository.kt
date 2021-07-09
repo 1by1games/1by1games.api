@@ -15,4 +15,5 @@ interface IRoomRepository {
     fun doesRoomExistByNameAndState(name: String, state: Room.State) : Boolean
     fun findById(id: RoomId): Room?
     fun findMemberByAccountIdAndRoomId(accountId: UUID, roomId: UUID): Member?
+    fun findMembersByRoomId(roomId: UUID): List<Member>
 }

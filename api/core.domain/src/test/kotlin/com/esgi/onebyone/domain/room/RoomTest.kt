@@ -16,12 +16,14 @@ class RoomTest {
     lateinit var memberDefaultThrow: DiceResult
     lateinit var defaultRoom: Room
     lateinit var newMember: Member
+    lateinit var newMemberUserId: UUID
+    lateinit var roomAuthorId: UUID
 
     @BeforeEach
     fun init() {
-        val roomAuthorId = AccountID(UUID.randomUUID())
+        this.roomAuthorId = UUID.randomUUID()
         roomAuthor =
-            Member(AccountID(UUID.randomUUID()), "gevinak", true, sortedSetOf<DiceResult>(), roomAuthorId.value)
+            Member(AccountID(UUID.randomUUID()), "gevinak", true, sortedSetOf<DiceResult>(), roomAuthorId)
         roomDefaultDice = Dice(6, 2)
         defaultRoom = Room.create(
             id = RoomId(UUID.randomUUID()),
@@ -31,12 +33,13 @@ class RoomTest {
             roomSize = 5,
             currentDice = roomDefaultDice
         )
+        this.newMemberUserId = UUID.randomUUID()
         newMember = Member(
             id = AccountID(UUID.randomUUID()),
             username = "toto",
             isAuthor = false,
             diceThrows = sortedSetOf<DiceResult>(),
-            accountId = UUID.randomUUID(),
+            accountId = newMemberUserId,
         )
         memberDefaultThrow = DiceResult(
             dice = roomDefaultDice,
@@ -161,6 +164,21 @@ class RoomTest {
     }
 
     //endregion
+
+    //region Query room
+
+    @Test
+    fun can_not_get_room_members_if_not_room_member() {
+        Assertions.assertThrows(DomainException::class.java) {
+            defaultRoom.canUserGetInfo(newMemberUserId)
+        }
+    }
+
+
+    @Test
+    fun can_get_room_infos() {
+        defaultRoom.canUserGetInfo(roomAuthorId)
+    }
 
 
 }
